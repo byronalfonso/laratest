@@ -16,7 +16,6 @@ class Company extends Model
         ->join('companies', 'countries.id', '=', 'companies.country_id')
         ->join('user_companies', 'companies.id', '=', 'user_companies.company_id')
         ->orderBy('companies.created_at', 'DESC')
-        ->take(5)
         ->get();
 
         $userIds = $userCompanies->pluck('user_id');
