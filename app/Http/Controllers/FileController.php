@@ -17,22 +17,30 @@ class FileController extends Controller
 
     public function uploadPDF(Request $request)
 	{
-        // Validate the file
-        $this->PDFService->validateFile('pdf');
 
-        // Init the file
-        $pdf = $request->file($expectedFile);
+        try {
+			// Validate the file
+            $this->PDFService->validateFile('pdf');
 
-        // Make sure that the keyword proposal is present
-        $this->PDFService->searchFor($pdf, 'Proposal');
+            // Init the file
+            $pdf = $request->file($expectedFile);
+    
+            // Make sure that the keyword proposal is present
+            $this->PDFService->searchFor($pdf, 'Proposal');
+    
+            // Store file directory
+            $fileInfo = $this->PDFService->storeFile($pdf);
+            
+            // Update the DB entity
+            $savedPDF = $this->PDFService->saveFile($fileInfo);
 
-        // Store file directory
-        $fileInfo = $this->PDFService->storeFile($pdf);
-        
-        // Update the DB entity
-		$savedPDF = $this->PDFService->saveFile($fileInfo);
-        return $this->success('Successfully uploaded your PDF', Response::HTTP_CREATED, [
-            'pdf_url' => $savedPDF->path,
-        ]);
+            return $this->respond(Response::HTTP_CREATED, [
+                'pdf_url' => $savedPDF->path,
+            ]);
+		} catch (Exception $e) {            
+            return $this->respond(Response::HTTP_UNPROCESSABLE_ENTITY, [
+                'message' => 'Unable to process your request.',
+            ]);
+		}        
 	}
 }
