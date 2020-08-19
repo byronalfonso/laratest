@@ -16,12 +16,11 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
-            $table->integer('country_id')->unsigned();
+            $table->unsignedBigInteger('country_id');
 
-            $table
-				->foreign('country_id')
-				->references('id')
-				->on('country');
+            $table->foreign('country_id')
+                ->references('id')
+                ->on('countries');
 
             $table->timestamps();
         });

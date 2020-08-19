@@ -15,8 +15,8 @@ class CreateUserCompaniesTable extends Migration
     {
         Schema::create('user_companies', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->unsigned();
-            $table->integer('company_id')->unsigned();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('company_id');
 
 			$table
 				->foreign('user_id')
