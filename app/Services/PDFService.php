@@ -1,5 +1,6 @@
 <?php
 namespace App\Services;
+use App\File;
 
 class PDFService
 {
@@ -67,7 +68,7 @@ class PDFService
 		return $fileInfo;
 	}
 
-	public function saveFile($fileInfo, $refLength)
+	public function saveFile($fileInfo)
 	{
 		// Check first if a file with the same name and size already exists
 		$file = File::where([
