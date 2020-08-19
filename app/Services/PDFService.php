@@ -69,7 +69,17 @@ class PDFService
 
 	public function saveFile($fileInfo, $refLength)
 	{
-		$file = new File();
+		// Check first if a file with the same name and size already exists
+		$file = File::where([
+			['file_name', $fileInfo['name']], 
+			['file_size', $fileInfo['size']]
+		])->first();
+		
+		// If file doesn't exist, create an entry in DB
+		if(empty($file)){
+			$file = new File();
+		}
+
 		$file->path = $fileInfo['path'];
 		$file->mime_type = $fileInfo['type'];
 		$file->file_name = $fileInfo['name'];
