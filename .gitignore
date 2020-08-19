@@ -12,3 +12,5 @@ npm-debug.log
 yarn-error.log
 docker-compose.yml
 Dockerfile
+/run
+task1.txt
