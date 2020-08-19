@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\User;
+use App\Country;
+use App\Company;
+use App\UserCompany;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,5 +19,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $users = Company::usersByCountry('Canada');
+    dd($users->toArray());
+
     return view('welcome');
 });
